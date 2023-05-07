@@ -1,0 +1,33 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/ye/slam_ws/devel/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/ye/nav_catkin/devel/include/**",
+        "/home/ye/modeling_ws/src/dog_simulation/include/**",
+        "/home/ye/nav_catkin/src/dynamic_filter/include/**",
+        "/home/ye/slam_ws/src/fast_lio_ouster/include/**",
+        "/home/ye/slam_ws/src/ouster_example/ouster_ros/include/**",
+        "/home/ye/nav_catkin/src/traversability_analysis/include/**",
+        "/home/ye/slam_ws/src/ublox_ros/ublox_gps/include/**",
+        "/home/ye/slam_ws/src/ublox_ros/ublox_msgs/include/**",
+        "/home/ye/slam_ws/src/ublox_ros/ublox_serialization/include/**",
+        "/home/ye/nav_catkin/src/urban_navigator/include/**",
+        "/home/ye/long_range_simulation/src/velodyne_simulator/velodyne_gazebo_plugins/include/**",
+        "/home/ye/long_range_simulation/src/waypoint_rviz_plugin/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
