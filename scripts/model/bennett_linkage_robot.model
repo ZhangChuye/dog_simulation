@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+    <model name="bennett_linkage_robot">
+        <static>true</static>
+        <self_collide>default</self_collide>
+        <pose>0 0 0 0 0 0</pose>
+
+        <link name = "link1">
+            <gravity>true</gravity>
+            <self_collide>true</self_collide>
+            <kenematic>default</kenematic>
+                <!--If true, the link is kinematic only-->
+        </link>
+
+        <joint name = "joint12">
+        ...
+        </joint>
+
+
+    </model>
+</sdf>
