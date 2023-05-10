@@ -10,10 +10,11 @@
             <self_collide>true</self_collide>
             <kenematic>false</kenematic><!--If true, the link is kinematic only-->
             
-            <!-- position relative frame -->
-            <frame name = 'pose_frame_link_1'>
-                <pose>0 0 0 0 0 0</pose>
-            </frame>
+            <pose>0 0 0 0 0 0</pose>
+                <!-- position relative frame -->
+                <frame name = 'pose_frame_link_1'>
+                    <pose>0 0 0 0 0 0</pose>
+                </frame>
 
             <!-- define the inertial -->
             <inertial>
@@ -55,10 +56,11 @@
             <self_collide>true</self_collide>
             <kenematic>false</kenematic><!--If true, the link is kinematic only-->
             
-            <!-- position relative frame -->
-            <frame name = 'pose_frame_link_2'>
-                <pose>0 0 0 0 0 0</pose>
-            </frame>
+            <pose>0 0 0 0 0 0</pose>
+                <!-- position relative frame -->
+                <frame name = 'pose_frame_link_2'>
+                    <pose>0 0 0 0 0 0</pose>
+                </frame>
 
             <!-- define the inertial -->
             <inertial>

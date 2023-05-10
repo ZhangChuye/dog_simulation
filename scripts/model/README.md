@@ -11,5 +11,5 @@
 - you can copy this document to the path ~./your_ros_workspace/src/
 - remember to change the path in "my_world.world" line23
 
-**What You Should Refer To**
+**What Should You Refer To**
 - http://sdformat.org/spec?elem=sdf&ver=1.6
