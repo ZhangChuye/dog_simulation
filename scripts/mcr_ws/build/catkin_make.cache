@@ -1,0 +1,2 @@
+bot_description
+-DCATKIN_DEVEL_PREFIX=/home/ye/Project/MCR/mcr_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ye/Project/MCR/mcr_ws/install -G Unix Makefiles
