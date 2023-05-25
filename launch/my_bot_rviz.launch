@@ -3,8 +3,8 @@
 	<param name="robot_description" textfile="$(find dog_simulation)/urdf/my_bot.urdf" />
 	
 	<!-- 运行joint_state_publisher节点，发布机器人的关节状态  -->
-	<node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
-	<!--<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />-->
+	<!-- <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" /> -->
+	<!-- <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> -->
 	
 	<!-- 运行robot_state_publisher节点，发布tf  -->
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
