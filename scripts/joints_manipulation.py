@@ -44,10 +44,14 @@ class JointPubisher():
         rospy.init_node("joint_publisher")
 
         self._joint_pub = rospy.Publisher('/joint_states',JointState,queue_size=10)
-        self.theta1=np.linspace(0,np.pi,100)
+        self.theta1=np.linspace(0,np.pi/2,100)
         
         self.joint_states = JointState()
-        self.joint_states.name=['joint_b_l1','joint_l1_l2','joint_l2_l3', 'joint_b_r1', 'joint_r1_r2', 'joint_r2_r3']
+        self.joint_states.name=['joint1','joint2','joint3']
+        self.theta1=0
+        self.theta2=0
+        self.theta3=0
+        self.d_theta=0.01
 
 
         # self._tf_buffer = tf2_ros.Buffer()
@@ -71,11 +75,18 @@ class JointPubisher():
 
     def run(self):
         loop = rospy.Rate(10)
-        i=0
         while not rospy.is_shutdown():
-            self.update_position([0,self.theta1[i],0,0,0,0])
+
+            if abs(self.theta1)>np.pi/6:
+                self.d_theta=-self.d_theta
+
+            self.theta1+=self.d_theta
+            self.theta2+=self.d_theta
+            self.theta3+=self.d_theta
+            
+
+            self.update_position([self.theta1,self.theta2,self.theta3])
             self._joint_pub.publish(self.joint_states)
-            i=i+1
             loop.sleep()
 
 
