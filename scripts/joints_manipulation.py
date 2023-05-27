@@ -58,15 +58,18 @@ class JointPubisher():
         self.theta3=0
         # self.d_theta=0.01
         self.d_theta=0
-        self.dn=1
+        self.dn=-1
 
 
         array = np.loadtxt(os.path.join('src/dog_simulation/matlab/test_csv'), delimiter=',')
-        print(array.shape)
+        print(len(array[1]))
         
-        self.theta1=np.zeros(1,array.shape(1))
-        self.theta2=array[:,1]
-        self.theta3=array[:,1]
+        self.theta1=[0.0]*100
+        print(self.theta1)
+        self.theta2=array[1,:]
+        print(self.theta2)
+        self.theta3=array[2,:]
+        print(self.theta3)
 
         # self._tf_buffer = tf2_ros.Buffer()
         # self._tf_listener = tf2_ros.TransformListener(self._tf_buffer)
@@ -92,13 +95,17 @@ class JointPubisher():
         index=0
         while not rospy.is_shutdown():
 
-            if index>=len(self.theta1) or index<=0:
+            if index>=len(self.theta1)-1 or index<=0:
                 self.dn=-self.dn
-            
+
             index=index+self.dn
 
-            self.update_position([self.theta1[0,index],self.theta2,self.theta3])
+            self.update_position([self.theta1[index],self.theta2[index],self.theta3[index]])
             self._joint_pub.publish(self.joint_states)
+
+            print(index)
+            
+
             loop.sleep()
 
     def look_up(self):
