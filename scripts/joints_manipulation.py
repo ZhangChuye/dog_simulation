@@ -9,10 +9,10 @@ import csv
 
 import numpy as np
 
+import tf
 from std_msgs.msg import Float32 
-
 from sensor_msgs.msg import JointState
-
+from geometry_msgs.msg import TransformStamped
 from datetime import datetime
 
 # os.chdir('')
@@ -49,6 +49,7 @@ class JointPubisher():
         
         self._tf_buffer = tf2_ros.Buffer()
         self._tf_listener = tf2_ros.TransformListener(self._tf_buffer)
+        self._tf_br = tf2_ros.TransformBroadcaster()
 
 
         self.joint_states = JointState()
@@ -61,19 +62,18 @@ class JointPubisher():
         self.dn=-1
 
 
-        array = np.loadtxt(os.path.join('src/dog_simulation/matlab/test_csv'), delimiter=',')
-        print(len(array[1]))
-        
-        self.theta1=[0.0]*100
-        print(self.theta1)
-        self.theta2=array[1,:]
-        print(self.theta2)
-        self.theta3=array[2,:]
-        print(self.theta3)
+        # array = np.loadtxt(os.path.join('src/dog_simulation/matlab/theta_array.csv'), delimiter=',')
+        array = np.loadtxt(os.path.join('src/dog_simulation/matlab/tracking_5.csv'), delimiter=',')
+        print(array)
 
-        # self._tf_buffer = tf2_ros.Buffer()
-        # self._tf_listener = tf2_ros.TransformListener(self._tf_buffer)
-        # self._tf_br = tf2_ros.TransformBroadcaster()
+        
+        self.theta1=array[0,:]
+        # print(self.theta1)
+        self.theta2=array[1,:]-1.99
+        # print(self.theta2)
+        self.theta3=array[2,:]+1.46
+        # print(self.theta3)
+
         # self._est_pose_pub = rospy.Publisher("/est/pose", PoseArray, queue_size= 10)
         # self._compass_pose_pub = rospy.Publisher("/compasss/pose", PoseArray, queue_size= 10)
         # self._enu_publisher = rospy.Publisher("/enu_angle", Pose, queue_size=1)
@@ -102,10 +102,10 @@ class JointPubisher():
 
             self.update_position([self.theta1[index],self.theta2[index],self.theta3[index]])
             self._joint_pub.publish(self.joint_states)
-
-            print(index)
             
-
+            self.publish_EE()
+            print(index)
+        
             loop.sleep()
 
     def look_up(self):
@@ -116,6 +116,29 @@ class JointPubisher():
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException) as e:
             rospy.logwarn(e)
             return None
+        
+    def publish_EE(self):
+        tfs = TransformStamped()
+        # --- 头信息
+        tfs.header.frame_id = "link3"
+        tfs.header.stamp = rospy.Time.now()
+        # --- 子坐标系
+        tfs.child_frame_id = "EE"
+        # --- 坐标系相对信息
+        # ------ 偏移量
+        tfs.transform.translation.x = 0.12
+        tfs.transform.translation.y = 0
+        tfs.transform.translation.z = 0
+        # ------ 四元数
+        qtn = tf.transformations.quaternion_from_euler(0,0,0)
+        tfs.transform.rotation.x = qtn[0]
+        tfs.transform.rotation.y = qtn[1]
+        tfs.transform.rotation.z = qtn[2]
+        tfs.transform.rotation.w = qtn[3]
+
+        # 5.广播器发送消息
+        self._tf_br.sendTransform(tfs)
+    
 
 
 if __name__ == "__main__":
