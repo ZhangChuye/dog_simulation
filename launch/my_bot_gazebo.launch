@@ -1,0 +1,13 @@
+<launch>
+    <!-- load urdf file into system -->
+    <param name="robot_description" textfile="$(find dog_simulation)/urdf/my_bot.urdf" />
+
+    <!-- open gazebo -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch" />
+
+    <!-- load model into gazebo -->
+    <node pkg="gazebo_ros" 
+          type="spawn_model" 
+          name="model" 
+          args="-urdf -model my_bot -param robot_description -z 1"  />
+</launch>
