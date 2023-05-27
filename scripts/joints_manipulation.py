@@ -5,6 +5,7 @@ import time
 
 import rospy
 import tf2_ros
+import csv
 
 import numpy as np
 
@@ -46,13 +47,26 @@ class JointPubisher():
         self._joint_pub = rospy.Publisher('/joint_states',JointState,queue_size=10)
         self.theta1=np.linspace(0,np.pi/2,100)
         
+        self._tf_buffer = tf2_ros.Buffer()
+        self._tf_listener = tf2_ros.TransformListener(self._tf_buffer)
+
+
         self.joint_states = JointState()
         self.joint_states.name=['joint1','joint2','joint3']
         self.theta1=0
         self.theta2=0
         self.theta3=0
-        self.d_theta=0.01
+        # self.d_theta=0.01
+        self.d_theta=0
+        self.dn=1
 
+
+        array = np.loadtxt(os.path.join('src/dog_simulation/matlab/test_csv'), delimiter=',')
+        print(array.shape)
+        
+        self.theta1=np.zeros(1,array.shape(1))
+        self.theta2=array[:,1]
+        self.theta3=array[:,1]
 
         # self._tf_buffer = tf2_ros.Buffer()
         # self._tf_listener = tf2_ros.TransformListener(self._tf_buffer)
@@ -71,23 +85,30 @@ class JointPubisher():
         self.joint_states.header.stamp=rospy.Time.now()
 
         self.joint_states.position=position
-        print('updated')
+        # print('updated')
 
     def run(self):
         loop = rospy.Rate(10)
+        index=0
         while not rospy.is_shutdown():
 
-            if abs(self.theta1)>np.pi/6:
-                self.d_theta=-self.d_theta
-
-            self.theta1+=self.d_theta
-            self.theta2+=self.d_theta
-            self.theta3+=self.d_theta
+            if index>=len(self.theta1) or index<=0:
+                self.dn=-self.dn
             
+            index=index+self.dn
 
-            self.update_position([self.theta1,self.theta2,self.theta3])
+            self.update_position([self.theta1[0,index],self.theta2,self.theta3])
             self._joint_pub.publish(self.joint_states)
             loop.sleep()
+
+    def look_up(self):
+        try:
+            tf_trans = self._tf_buffer.lookup_transform(
+            "odom", "base_link", rospy.Time(0))
+            return tf_trans
+        except (tf2_ros.LookupException, tf2_ros.ConnectivityException) as e:
+            rospy.logwarn(e)
+            return None
 
 
 if __name__ == "__main__":
