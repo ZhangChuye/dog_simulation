@@ -1,24 +1,49 @@
 import time
 
-import pybullet as pb
+import numpy as np
+import pybullet as p
 import pybullet_data
 
-client = pb.connect(pb.GUI)
+client = p.connect(p.GUI)
 # client = pb.connect(pb.DIRECT) # non-graphical version
-pb.setAdditionalSearchPath(pybullet_data.getDataPath()) # add search path for loadURDF.
+p.setAdditionalSearchPath(pybullet_data.getDataPath()) # add search path for loadURDF.
 
 #pb.configureDebugVisualizer(pb.COV_ENABLE_RENDERING, 0) # disable rendering during creation.
 #pb.configureDebugVisualizer(pb.COV_ENABLE_GUI, 0) # disable user interface during creation.
 #pb.configureDebugVisualizer(pb.COV_ENABLE_TINY_RENDERER, 0) # disable tiny renderer during creation.
 
-pb.setGravity(0, 0, -10) # set gravity.
+p.setGravity(0, 0, -10) # set gravity.
 
 parentPath = "/home/ye/Project/mcr/dog_simulation/urdf/"
-planeId = pb.loadURDF("plane.urdf") # load plane.urdf.
-robotID = pb.loadURDF(parentPath+"my_bot.urdf", [0, 0, 1]) # load r2d2.urdf.
+planeId = p.loadURDF("plane.urdf") # load plane.urdf.
+robotID = p.loadURDF(parentPath+"my_bot.urdf", [0, 0, 0.1]) # load r2d2.urdf.
+
+num_joints = p.getNumJoints(robotID)
+# get joint info
+joint_infos = []
+for i in range(num_joints):
+	joint_info = p.getJointInfo(robotID, i)
+	print(joint_info)
+	joint_infos.append(joint_info)
+
+maxforce = 10
+velocity = 0.4
+for i in range(len(joint_infos)):
+    if i == 0 or 3 or 6 or 9:
+        p.setJointMotorControl2(bodyUniqueId=robotID,
+                                       jointIndex=joint_infos[i][0],
+                                       controlMode=p.VELOCITY_CONTROL,
+                                       targetVelocity=velocity,
+                                       force=maxforce)
 
 while(True):
-    pb.stepSimulation()
+    p.stepSimulation()
     time.sleep(1./240.)
+    p.setJointMotorControl2(robotID,2,p.POSITION_CONTROL,targetVelocity=1,force=1000)
+    for i in range(len(joint_infos)):
+        joint_info = p.getJointInfo(robotID, i)
+        print(joint_info)
 
 pb.disconnect()
+
+
