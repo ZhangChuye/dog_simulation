@@ -1,0 +1,41 @@
+digraph G {
+node [shape=box];
+"body" [label="body"];
+"left1Link1" [label="left1Link1"];
+"left1Link2" [label="left1Link2"];
+"left1Link3" [label="left1Link3"];
+"left2Link1" [label="left2Link1"];
+"left2Link2" [label="left2Link2"];
+"left2Link3" [label="left2Link3"];
+"right1Link1" [label="right1Link1"];
+"right1Link2" [label="right1Link2"];
+"right1Link3" [label="right1Link3"];
+"right2Link1" [label="right2Link1"];
+"right2Link2" [label="right2Link2"];
+"right2Link3" [label="right2Link3"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"body" -> "body_left1Link1" [label="xyz: 0.0725 0.0675 0 \nrpy: 0 -0 0"]
+"body_left1Link1" -> "left1Link1"
+"left1Link1" -> "left1Link1_left1Link2" [label="xyz: 0 0 0.025 \nrpy: 0 -0 0"]
+"left1Link1_left1Link2" -> "left1Link2"
+"left1Link2" -> "left1Link2_left1Link3" [label="xyz: 0 0.12 0 \nrpy: 0 -0 0"]
+"left1Link2_left1Link3" -> "left1Link3"
+"body" -> "body_left2Link1" [label="xyz: -0.0725 0.0675 0 \nrpy: 0 -0 0"]
+"body_left2Link1" -> "left2Link1"
+"left2Link1" -> "left2Link1_left2Link2" [label="xyz: 0 0 0.025 \nrpy: 0 -0 0"]
+"left2Link1_left2Link2" -> "left2Link2"
+"left2Link2" -> "left2Link2_left2Link3" [label="xyz: 0 0.12 0 \nrpy: 0 -0 0"]
+"left2Link2_left2Link3" -> "left2Link3"
+"body" -> "body_right1Link1" [label="xyz: 0.0725 -0.0675 0 \nrpy: 0 -0 0"]
+"body_right1Link1" -> "right1Link1"
+"right1Link1" -> "right1Link1_right1Link2" [label="xyz: 0 0 0.025 \nrpy: 0 -0 0"]
+"right1Link1_right1Link2" -> "right1Link2"
+"right1Link2" -> "right1Link2_right1Link3" [label="xyz: 0 -0.12 0 \nrpy: 0 -0 0"]
+"right1Link2_right1Link3" -> "right1Link3"
+"body" -> "body_right2Link1" [label="xyz: -0.0725 -0.0675 0 \nrpy: 0 -0 0"]
+"body_right2Link1" -> "right2Link1"
+"right2Link1" -> "right2Link1_right2Link2" [label="xyz: 0 0 0.025 \nrpy: 0 -0 0"]
+"right2Link1_right2Link2" -> "right2Link2"
+"right2Link2" -> "right2Link2_right2Link3" [label="xyz: 0 -0.12 0 \nrpy: 0 -0 0"]
+"right2Link2_right2Link3" -> "right2Link3"
+}
